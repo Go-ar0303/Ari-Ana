@@ -1,15 +1,18 @@
 <?
 require "conn.php";
-session_start();
-$user_id = $_SESSION['user_id'];
 
 
 
 if (isset($_GET['logout'])) {
+  session_start();
   unset($user_id);
   session_destroy();
   header('location:login.php');
+  $user_id = $_SESSION['user_id'];
+  
+
 }
+
 
 ?>
 
@@ -56,12 +59,19 @@ if (isset($_GET['logout'])) {
               </li>
               <li class="nav-item avatar" >
                 <a class="nav-link" href="" >
-                  <? $select = mysqli_query($conn, "SELECT * FROM `user_form` WHERE id = '$user_id'") or die('query failed');
-                  if (mysqli_num_rows($select) > 0) {
-                    $fetch = mysqli_fetch_assoc($select);
-                  }
+                  <? 
+                   session_start();
+                   
+                  
+                  $user_id = $_SESSION['user_id'];
+                  $select = mysqli_query($conn, "SELECT * FROM `user_form` WHERE id = '$user_id'") or die('query failed');
+                  $fetch = mysqli_fetch_assoc($select);
+                 // if (mysqli_num_rows($select) > 0) {
+                   
+                    //$fetch = mysqli_fetch_assoc($select);
+                  //}
                   if ($fetch['image'] == '') {
-                   // echo '<img class="avatar" src="image/default-avatar.png">';
+                    //echo '<img class="avatar" src="image/default-avatar.png">';
                   
                    
                   } else {
